@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 // mongoose.connect('mongodb+srv://root:1234@cluster0.uuohiyx.mongodb.net/hello?retryWrites=true&w=majority', {
 // mongoose.connect('mongodb://root:1234@localhost:27017/hello', {
-mongoose.connect('mongodb://root:1234@localhost:27017/hello', {
+mongoose.connect('mongodb://root:1234@localhost:27017/hello', { // 몽구스 테스트 중
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
