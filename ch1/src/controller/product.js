@@ -1,9 +1,16 @@
 const productModel = require('../model/Product')
+const router = require('express').Router();
 
-exports.hello = (req, res) => {
-    res.send('안녕하세요!!!');
-}
+router.get('/', (req, res, next) => {
+    res.send('안녕하세요');
+});
 
-exports.createProduct = (req, res, next) => {
-    productModel.create(req.body);
-}
+// exports.hello = (req, res) => {
+//     res.send('안녕하세요!!!');
+// }
+
+// exports.createProduct = (req, res, next) => {
+//     productModel.create(req.body);
+// }
+
+module.exports = router;
