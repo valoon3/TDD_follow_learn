@@ -1,4 +1,4 @@
-const productController = require('../../src/controller/product');
+const productController = require('../../src/controller/productController');
 const productModel = require('../../src/model/Product');
 const httpMocks = require('node-mocks-http');
 const newProduct = require('../data/new-product.json');

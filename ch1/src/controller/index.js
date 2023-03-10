@@ -9,7 +9,7 @@ filenameList.forEach((fileName) => {
     const moduleRouter = require('./' + fileName);
 
     // 파일 이름을 그대로 라우터 미들 네임으로 사용
-    const path = fileName.replace('.js', '');
+    const path = fileName.replace('Controller.js', '');
 
     router.use('/' + path, moduleRouter);
   }
