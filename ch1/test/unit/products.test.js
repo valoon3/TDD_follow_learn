@@ -1,7 +1,7 @@
-const productController = require('../../src/controller/productController');
 const productModel = require('../../src/model/Product');
 const httpMocks = require('node-mocks-http');
 const newProduct = require('../data/new-product.json');
+const productService = require('../../src/service/productService');
 
 // beforeEach : 여러개의 테스트 안에 공통된 Code가 있다면 beforeEach 안에 넣어서 줄여줄 수 있습니다.
 
@@ -18,13 +18,14 @@ describe('Product Controller Create', () => {
         req.body = newProduct;
     })
 
-    it('should have a createProduct function', () => {
-        expect(typeof productController.createProduct).toBe('function')
-    })
-    it('should call Product modelCreate', () => {
+    // 테스트 하고자 하는 함수가 존재하는가 테스트
+    test('should have a createProduct function', () => {
+        expect(typeof productService.createProduct).toBe('function');
+    });
 
-
-        productController.createProduct(req, res, next);
+    test('should call Product modelCreate', () => {
+        // productService.createProduct() 를 실행하였을 때 productModel.create 가 함께 실행되는가(toBeCalledWith)
+        productService.createProduct(req, res, next);
         expect(productModel.create).toBeCalledWith(newProduct);
-    })
+    });
 })
