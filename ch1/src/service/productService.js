@@ -9,5 +9,6 @@ exports.one = (req, res) => {
 };
 
 exports.createProduct = (req, res, next) => {
-  productModel.create(req.body);
+  const createdProduct = productModel.create(req.body);
+  res.status(201).json(createdProduct);
 };
