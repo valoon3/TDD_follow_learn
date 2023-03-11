@@ -29,8 +29,8 @@ describe('Product Controller Create', () => {
         expect(productModel.create).toBeCalledWith(newProduct);
     });
 
-    test('should return 201 response code', () => {
-        productService.createProduct(req, res, next);
+    test('should return 201 response code', async () => {
+        await productService.createProduct(req, res, next);
 
         // res.statusCode 의 값이 일치하는지 확인
         expect(res.statusCode).toBe(201);
@@ -39,11 +39,11 @@ describe('Product Controller Create', () => {
         expect(res._isEndCalled()).toBeTruthy();
     });
 
-    test('should return json body in response', () => {
+    test('should return json body in response', async () => {
         // productModel.create 를 실행했을때 return 되는 값을 임의로 지정해준다.
         productModel.create.mockReturnValue(newProduct);
 
-        productService.createProduct(req, res, next);
+        await productService.createProduct(req, res, next);
         // res._getJSONData() 의 값이
         expect(res._getJSONData()).toStrictEqual(newProduct);
     });

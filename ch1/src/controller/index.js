@@ -2,7 +2,7 @@ const router = require('express').Router();
 const fs = require('fs');
 
 // TODO: 지금 경로 하드 코딩으로 잡혀있음 .env 로 나중에 수정 필요
-const filenameList = fs.readdirSync('./controller');
+const filenameList = fs.readdirSync(__dirname);
 
 filenameList.forEach((fileName) => {
   if(fileName !== 'index.js') {

@@ -6,12 +6,8 @@ router.get('/', productService.hello);
 
 router.get('/one', productService.one);
 
-// exports.hello = (req, res) => {
-//     res.send('안녕하세요!!!');
-// }
+router.post('/', productService.createProduct);
 
-// exports.createProduct = (req, res, next) => {
-//     productModel.create(req.body);
-// }
+
 
 module.exports = router;

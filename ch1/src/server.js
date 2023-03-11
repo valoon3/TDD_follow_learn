@@ -11,7 +11,7 @@ connectMongoDB();
 app.use(express.json());
 
 // 모든 라우터
-app.use(integrationRouter);
+app.use('/api', integrationRouter);
 
 app.get("/", (req, res) => {
     res.send('root page test');

@@ -8,7 +8,8 @@ exports.one = (req, res) => {
   res.send('product page one! open');
 };
 
-exports.createProduct = (req, res, next) => {
-  const createdProduct = productModel.create(req.body);
+exports.createProduct = async (req, res, next) => {
+  const createdProduct = await productModel.create(req.body);
+
   res.status(201).json(createdProduct);
 };
