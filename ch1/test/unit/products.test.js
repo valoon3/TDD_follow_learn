@@ -10,7 +10,7 @@ productModel.create = jest.fn(); // 목 함수 생성
 let req, res, next;
 beforeEach(() => {
     [req, res] = [httpMocks.createRequest(), httpMocks.createResponse()];
-    next = null;
+    next = jest.fn();
 })
 
 describe('Product Controller Create', () => {
@@ -46,5 +46,15 @@ describe('Product Controller Create', () => {
         await productService.createProduct(req, res, next);
         // res._getJSONData() 의 값이
         expect(res._getJSONData()).toStrictEqual(newProduct);
+    });
+
+    test('should handle errors', async () => {
+        const errorMessage = { message : 'description property missing' };
+        const rejectedPromise = Promise.reject(errorMessage);
+
+        productModel.create.mockReturnValue(rejectedPromise);
+        await productService.createProduct(req, res, next);
+
+        expect(next).toBeCalledWith(errorMessage);
     });
 })
