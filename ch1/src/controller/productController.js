@@ -8,9 +8,10 @@ router.get('/one', productService.one);
 
 router.post('/', productService.createProduct);
 
-router.use((error, req, res, next) => {
-  res.status(500).json({ message : error.message });
-});
+router.get('/select', productService.getProduct);
+
+router.use(productService.makeErrorMessage);
+
 
 
 

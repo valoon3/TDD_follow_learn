@@ -17,3 +17,20 @@ exports.createProduct = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getProduct = async (req, res, next) => {
+  try {
+    const selectedAllProduct = await productModel.find({});
+    res.status(200).json(selectedAllProduct);
+  } catch(err) {
+    console.error(err);
+    next(err);
+  }
+}
+
+
+
+// 에러 메시지 생산
+exports.makeErrorMessage = async (err, req, res, next) => {
+  res.status(500).json({ message : err.message });
+};
