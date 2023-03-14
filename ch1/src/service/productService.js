@@ -37,13 +37,33 @@ exports.getProductById = async (req, res, next) => {
     } else {
       res.status(404).send();
     }
-    // selectedOneProduct ? res.status(200).json(selectedOneProduct) : res.status(404).json(null);
-
   } catch(err) {
     console.error(err);
-    res.status(404);
     next(err);
   }
+}
+
+exports.updateProduct = async (req, res, next) => {
+  try {
+    const resultProduct = await productModel.findByIdAndUpdate(
+        req.params.productId,
+        req.body,
+        { new : true }
+    )
+
+    if(resultProduct) {
+      res.status(200).json(resultProduct);
+    } else {
+      res.status(404).json({message: 'no date in this id'});
+    }
+  } catch(err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.deleteProduct = (req, res, next) => {
+
 }
 
 
