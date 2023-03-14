@@ -10,6 +10,7 @@ productModel.create = jest.fn(); // 목 함수 생성
 productModel.find = jest.fn();
 productModel.findById = jest.fn();
 productModel.findByIdAndUpdate = jest.fn();
+productModel.findByIdAndDelete = jest.fn();
 
 let req, res, next;
 beforeEach(() => {
@@ -209,6 +210,28 @@ describe('Product Controller delete', () => {
 
   test('should have a deleteProduct func', () => {
     expect(typeof productService.deleteProduct).toBe('function');
+  });
+
+  test('should call ProductModel.findByIdAndDelete', async () => {
+    const fakeProductId = 'asdfadsfasdf';
+    req.params.productId = fakeProductId;
+
+    await productService.deleteProduct(req, res, next);
+    expect(productModel.findByIdAndDelete).toBeCalledWith(fakeProductId);
+  });
+
+  test('should return 200 response', async () => {
+    let deleteProduct = {
+      name: 'deleteProduct',
+      description: 'deleteProduct sample'
+    }
+
+    productModel.findByIdAndDelete.mockReturnValue(deleteProduct);
+    await productService.deleteProduct(req, res, next);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toStrictEqual(deleteProduct);
+    expect(res._isEndCalled()).toBeTruthy();
   });
 
 });
