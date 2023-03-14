@@ -28,6 +28,23 @@ exports.getProduct = async (req, res, next) => {
   }
 }
 
+exports.getProductById = async (req, res, next) => {
+  try {
+    const selectedOneProduct = await productModel.findById(req.params.productId);
+
+    if(selectedOneProduct) {
+      res.status(200).json(selectedOneProduct);
+    } else {
+      res.status(404).send();
+    }
+    // selectedOneProduct ? res.status(200).json(selectedOneProduct) : res.status(404).json(null);
+
+  } catch(err) {
+    console.error(err);
+    res.status(404);
+    next(err);
+  }
+}
 
 
 // 에러 메시지 생산

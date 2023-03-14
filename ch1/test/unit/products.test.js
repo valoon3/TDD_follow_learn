@@ -8,6 +8,7 @@ const productService = require('../../src/service/productService');
 
 productModel.create = jest.fn(); // 목 함수 생성
 productModel.find = jest.fn();
+productModel.findById = jest.fn();
 
 let req, res, next;
 beforeEach(() => {
@@ -96,6 +97,45 @@ describe('Product Controller Get', () => {
         productModel.find.mockReturnValue(rejectedPromise);
         await productService.getProduct(req, res, next);
         expect(next).toBeCalledWith(errorMessage);
+    });
+
+});
+
+describe('Product Controller GetById', () => {
+
+    const sampleProductId = '640c23f7144d5e6de7739897';
+
+    test('should have a getProduct function', () => {
+        expect(typeof productService.getProductById).toBe('function');
+    });
+
+    test('should call productModel.findById', async () => {
+        req.params.productId = sampleProductId;
+        await productService.getProductById(req, res, next);
+        expect(productModel.findById).toBeCalledWith(req.params.productId);
+    });
+
+    test('should return json body and response code 200', async () => {
+        productModel.findById.mockReturnValue(newProduct);
+        const selectedOneProduct = await productService.getProductById(req, res, next);
+        expect(res.statusCode).toBe(200);
+        expect(res._isEndCalled).toBeTruthy();
+    });
+
+    test('should return 404 when item doesnt exist', async () => {
+        productModel.findById.mockReturnValue(null);
+        await productService.getProductById(req, res, next);
+        expect(res.statusCode).toBe(404);
+        expect(res._isEndCalled()).toBeTruthy();
+    });
+
+    test('should handle errors', async () => {
+        const errorMessage = { message : 'error'};
+        const promiseReject = Promise.reject(errorMessage);
+        productModel.findById.mockReturnValue(promiseReject);
+
+        await productService.getProductById(req, res, next);
+        expect(next).toHaveBeenCalledWith(errorMessage);
     });
 
 });
