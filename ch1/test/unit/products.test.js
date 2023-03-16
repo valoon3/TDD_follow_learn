@@ -234,4 +234,20 @@ describe('Product Controller delete', () => {
     expect(res._isEndCalled()).toBeTruthy();
   });
 
+  test('should handle 404 when item doesnt exist', async () => {
+    productModel.findByIdAndDelete.mockReturnValue(null);
+    await productService.deleteProduct(req, res, next);
+    expect(res.statusCode).toBe(404);
+    expect(res._isEndCalled()).toBeTruthy();
+  });
+
+  test('should handle error', async () => {
+    const errorMessage = { message : 'Error message delete'};
+    const rejectPromise = Promise.reject(errorMessage);
+    productModel.findByIdAndDelete.mockReturnValue(rejectPromise);
+
+    await productService.deleteProduct(req, res, next);
+    expect(next).toHaveBeenCalledWith(errorMessage);
+  });
+
 });
